@@ -35,7 +35,7 @@
             <label htmlFor="hours">Hours</label>
             <input
               value={inverted ? amount : Math.round(amount / 60)}
-              id="hors"
+              id="hours"
               placeholder="Hours"
               type="number"
               disabled={!inverted}
@@ -50,7 +50,46 @@
       );
     }
     function KmToMiles() {
-      return <h3>Km 2 M</h3>;
+      const [length, setLength] = React.useState();
+      const [inverted, setInvert] = React.useState(false);
+      const reset = () => setLength("");
+      const onChange = (event) => {
+        setLength(event.target.value);
+      };
+      const onInvert = () => {
+        reset();
+        setInvert((current) => !current);
+      };
+      return (
+        <div>
+          <div>
+            <label htmlFor="km">Kilometer</label>
+            <input
+              value={inverted ? Math.ceil(length * 1.609) : length}
+              id="km"
+              type="number"
+              placeholder="Kilometer"
+              onChange={onChange}
+              disabled={inverted}
+            />
+          </div>
+          <div>
+            <label htmlFor="mile">Mile</label>
+            <input
+              value={inverted ? length : Math.round(length / 1.609)}
+              id="mile"
+              type="number"
+              placeholder="Mile"
+              onChange={onChange}
+              disabled={!inverted}
+            />
+          </div>
+          <button onClick={reset}>Reset</button>
+          <button onClick={onInvert}>
+            {inverted ? "Trun back" : "Invert"}
+          </button>
+        </div>
+      );
     }
     function App() {
       const [index, setIndex] = React.useState("0");
